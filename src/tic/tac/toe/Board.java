@@ -10,9 +10,11 @@ package tic.tac.toe;
  * @author alex
  */
 public class Board {
-
+    
+    // Define the board as a 3x3 grid (array)
     private char[][] board = new char[3][3];
-
+    
+    // Initialize the array with empty spaces (free spots on board)
     public Board() {
         for (int x = 0; x < 3; x++) {
             for (int y = 0; y < 3; y++) {
@@ -20,7 +22,8 @@ public class Board {
             }
         }
     }
-
+    
+    // Printing (much fluff for pretty design)
     public void print() {
         System.out.println("- - - - - - - - -");
         System.out.println("|     0    1    2");
@@ -35,7 +38,8 @@ public class Board {
         System.out.println("- - - - - - - - -");
         System.out.println("");
     }
-
+    
+    // Makes a move
     public boolean move(char piece, int x, int y) {
 
         // Is the space a thing?
@@ -45,14 +49,17 @@ public class Board {
 
         // Is the space empty?
         if (board[x][y] == ' ') {
-            board[x][y] = piece;
-            return true;
+            board[x][y] = piece; // Set the space to x or o
+            return true; // Yes, move was executed
         } else {
-            return false;
+            return false; // Not executed, sum ting wong
         }
     }
-
+    
+    // Tests for winning conditions
     public boolean isWinner(char piece) {
+        
+        // Checks rows and columns
         for (int i = 0; i < 3; i++) {
             if (board[i][0] == piece && board[i][1] == piece && board[i][2] == piece) {
                 return true;
@@ -61,21 +68,30 @@ public class Board {
                 return true;
             }
         }
-
+        
+        // Checks diagonal
         if (board[0][0] == piece && board[1][1] == piece && board[2][2] == piece) {
             return true;
         }
-
+        
+        // Checks diagonal
         if (board[0][2] == piece && board[1][1] == piece && board[2][0] == piece) {
             return true;
         }
+        
+        // Obviously, if not winning conditions, isWinner is false
         return false;
     }
-
+    
+    // Checks if all spaces are occupied
     public boolean isTied() {
+        
+        // If there's a winner, there can't be a tie!
         if (isWinner('x') || isWinner('o')) {
             return false;
         }
+        
+        // Goes through each space individually, checking if it's empty
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board[j][i] == ' ') {
@@ -84,6 +100,6 @@ public class Board {
             }
         }
 
-        return true;
+        return true; // If no empty spaces, it's a tie
     }
 }
