@@ -26,8 +26,8 @@ public class Board {
     // Printing (much fluff for pretty design)
     public void print() {
         System.out.println("- - - - - - - - -");
-        System.out.println("|     0    1    2");
-        System.out.println("|");
+        System.out.println("| x:  0    1    2");
+        System.out.println("| y");
         for (int y = 0; y < 3; y++) {
             System.out.print("| " + y + " ");
             for (int x = 0; x < 3; x++) {
