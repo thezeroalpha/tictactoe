@@ -14,8 +14,14 @@ import java.util.Random;
 public class AI {
     private char difficulty;
     
-    public AI(char difficulty) {
+    public AI() {
+    }
+    
+    public void setDifficulty(char difficulty) {
         this.difficulty = difficulty;
+    }
+    public char getDifficulty() {
+        return difficulty;
     }
     
     public int[] generateCoordinates() {
