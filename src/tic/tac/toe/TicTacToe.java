@@ -5,6 +5,7 @@
  */
 package tic.tac.toe;
 
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -29,10 +30,11 @@ public class TicTacToe {
         boolean tie = false;
         boolean ai = false;
         String difficulty;
-        char curP = 'x';
+        char curP;
+        char winP='x';
 
         System.out.println("Welcome to Tic-Tac-Toe!");
-        System.out.print("How many players?");
+        System.out.print("How many players? ");
         int numPlayers = in.nextInt();
 
         boolean aiset = false;
@@ -53,84 +55,135 @@ public class TicTacToe {
             } else {
                 System.out.println("Invalid entry.");
             }
+        }
 
-            // While there is a free space and nobody's won
-            while (!win && !tie) {
+        if (ai == true && numPlayers == 1) {
+            Random random = new Random();
+            curP = (random.nextInt() % 2 == 0) ? 'x' : 'o';
+        } else {
+            curP = 'x';
+        }
 
-                // Show the board to the user
-                board.print();
-                System.out.println("Turn: " + curP);
-
-            // Collect user input from 'x,y' form
-                // Split it into an array
-                System.out.print("Enter x,y coordinates: ");
-                String[] newMoveString = in.next().split(",");
-
-                // Must convert to int to use in board[][] array
-                int xInt = Integer.parseInt(newMoveString[0]);
-                int yInt = Integer.parseInt(newMoveString[1]);
-
-                // If you can make this move
-                if (board.move(curP, xInt, yInt)) {
-
-                // Check for win & tie right at the beginning
-                    // Must be done right after move was made, before next turn
+        // First turn
+        if (curP == 'o' && ai && numPlayers == 1) {
+            board.print();
+            System.out.println("AI goes first");
+            boolean moved = false;
+            while (moved == false) {
+                int[] coordinates = myAI.generateCoordinates();
+                if (board.move('o', coordinates[0], coordinates[1])) {
+                    moved = true;
                     if (board.isWinner(curP)) {
                         win = true;
+                        winP = curP;
                     }
                     if (board.isTied()) {
                         tie = true;
                     }
-
-                    // Switch the turn (change the piece used) if neither win nor tie
-                    if (numPlayers == 1 && !win && !tie) {
-                        boolean moved = false;
-                        while (moved == false) {
-                            int[] coordinates = myAI.generateCoordinates();
-                            if (board.move('o', coordinates[0], coordinates[1])) {
-                                moved = true;
-                                if (board.isWinner(curP)) {
-                                    win = true;
-                                }
-                                if (board.isTied()) {
-                                    tie = true;
-                                }
-                            } else {
-                                moved = false;
-                            }
-                        }
-                    } else {
-                        if (!win && !tie) {
-                            switch (curP) {
-                                case 'x':
-                                    curP = 'o';
-                                    break;
-                                default:
-                                    curP = 'x';
-                                    break;
-
-                            }
-                        }
-                    }
-
-                } // You can't make this move
-                // Happens if space is occupied or doesn't exist
-                else {
-                    System.out.println("!!! INVALID MOVE !!!");
-                    System.out.println("Go again.");
+                } else {
+                    moved = false;
                 }
             }
 
-            // Print out the board
-            board.print();
+            switch (curP) {
+                case 'x':
+                    curP = 'o';
+                    break;
+                default:
+                    curP = 'x';
+                    break;
 
-            // Show a message depending on what condition occurred
-            if (win == true) {
-                System.out.println("YOU WON!");
-                System.out.println("Winner: " + curP);
-            } else if (tie == true) {
-                System.out.println("You tied :/");
+            }
+
+        }
+        
+        // While there is a free space and nobody's won
+        while (!win && !tie) {
+
+            // Show the board to the user
+            board.print();
+            System.out.println("Turn: " + curP);
+
+            // Collect user input from 'x,y' form
+            // Split it into an array
+            System.out.print("Enter x,y coordinates: ");
+            String[] newMoveString = in.next().split(",");
+
+            // Must convert to int to use in board[][] array
+            int xInt = Integer.parseInt(newMoveString[0]);
+            int yInt = Integer.parseInt(newMoveString[1]);
+
+            // If you can make this move
+            if (board.move(curP, xInt, yInt)) {
+
+                // Check for win & tie right at the beginning
+                // Must be done right after move was made, before next turn
+                if (board.isWinner(curP)) {
+                    win = true;
+                    winP = curP;
+                }
+                if (board.isTied()) {
+                    tie = true;
+                }
+
+                if (numPlayers == 1 && !win && !tie) {
+                    boolean moved = false;
+                    while (moved == false) {
+                        int[] coordinates = myAI.generateCoordinates();
+                        if (board.move('o', coordinates[0], coordinates[1])) {
+                            moved = true;
+                            if (board.isWinner('o')) {
+                                win = true;
+                                winP = 'o';
+                                
+                            }
+                            if (board.isTied()) {
+                                tie = true;
+                            }
+                        } else {
+                            moved = false;
+                        }
+                    }
+                } 
+                else {
+                    if (!win && !tie) {
+                        switch (curP) {
+                            case 'x':
+                                curP = 'o';
+                                break;
+                            default:
+                                curP = 'x';
+                                break;
+
+                        }
+                    }
+                }
+
+            } // You can't make this move
+            // Happens if space is occupied or doesn't exist
+            else {
+                System.out.println("!!! INVALID MOVE !!!");
+                System.out.println("Go again.");
             }
         }
+
+        // Print out the board
+        board.print();
+
+        // Show a message depending on what condition occurred
+        if (win == true) {
+            if (ai && numPlayers==1 && winP=='o') {
+                System.out.println("AI WON!");
+            }
+            else {
+            System.out.println("YOU WON!");
+            }
+        } else if (tie == true) {
+            System.out.println("You tied :/");
+        }
+    }
+
+    public void AIMove() {
+
     }
 }
