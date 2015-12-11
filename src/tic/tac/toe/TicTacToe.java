@@ -31,7 +31,7 @@ public class TicTacToe {
         boolean ai = false;
         String difficulty;
         char curP;
-        char winP='x';
+        char winP = 'x';
 
         System.out.println("Welcome to Tic-Tac-Toe!");
         System.out.print("How many players? ");
@@ -70,7 +70,22 @@ public class TicTacToe {
             System.out.println("AI goes first");
             boolean moved = false;
             while (moved == false) {
-                int[] coordinates = myAI.generateCoordinates();
+                int[] coordinates;
+                if (myAI.getDifficulty() == 'e') {
+                    coordinates = myAI.generateCoordinates();
+                } else {
+                    Random rand = new Random();
+                    int randCorner = rand.nextInt(4) + 1;
+                    if (randCorner == 1) {
+                        coordinates = new int[]{0, 0};
+                    } else if (randCorner == 2) {
+                        coordinates = new int[]{2, 0};
+                    } else if (randCorner == 3) {
+                        coordinates = new int[]{0, 2};
+                    } else {
+                        coordinates = new int[]{2, 2};
+                    }
+                }
                 if (board.move('o', coordinates[0], coordinates[1])) {
                     moved = true;
                     if (board.isWinner(curP)) {
@@ -96,7 +111,7 @@ public class TicTacToe {
             }
 
         }
-        
+
         // While there is a free space and nobody's won
         while (!win && !tie) {
 
@@ -129,13 +144,18 @@ public class TicTacToe {
                 if (numPlayers == 1 && !win && !tie) {
                     boolean moved = false;
                     while (moved == false) {
-                        int[] coordinates = myAI.generateCoordinates();
+                        int[] coordinates;
+                        if (myAI.getDifficulty() == 'e') {
+                            coordinates = myAI.generateCoordinates();
+                        } else {
+                            coordinates = new int[]{2,2};
+                        }
                         if (board.move('o', coordinates[0], coordinates[1])) {
                             moved = true;
                             if (board.isWinner('o')) {
                                 win = true;
                                 winP = 'o';
-                                
+
                             }
                             if (board.isTied()) {
                                 tie = true;
@@ -144,8 +164,7 @@ public class TicTacToe {
                             moved = false;
                         }
                     }
-                } 
-                else {
+                } else {
                     if (!win && !tie) {
                         switch (curP) {
                             case 'x':
@@ -172,11 +191,10 @@ public class TicTacToe {
 
         // Show a message depending on what condition occurred
         if (win == true) {
-            if (ai && numPlayers==1 && winP=='o') {
+            if (ai && numPlayers == 1 && winP == 'o') {
                 System.out.println("AI WON!");
-            }
-            else {
-            System.out.println("YOU WON!");
+            } else {
+                System.out.println("YOU WON!");
             }
         } else if (tie == true) {
             System.out.println("You tied :/");
