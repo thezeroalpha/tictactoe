@@ -182,8 +182,4 @@ public class TicTacToe {
             System.out.println("You tied :/");
         }
     }
-
-    public void AIMove() {
-
-    }
 }
