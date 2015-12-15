@@ -27,7 +27,6 @@ public class Board {
     public char getSpace(int x, int y) {
         return board[x][y];
     }
-    
     // Printing (much fluff for pretty design)
     public void print() {
         System.out.println("- - - - - - - - -");
