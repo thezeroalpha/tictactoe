@@ -178,10 +178,13 @@ public class TicTacToe {
                                 coordinates = myAI.generateCoordinates();
                             } // Hard AI: do other stuff
                             else {
-                                // TODO: Check for own moves
+                                // Check for center space free
+                                if (board.getSpace(1,1) == ' ') {
+                                    coordinates = new int[]{1,1};
+                                }
                                 // <editor-fold defaultstate="collapsed" desc=" Check user moves ">
                                 // Row 0
-                                if (board.getSpace(0, 0) == 'x' && board.getSpace(2, 0) == 'x' && board.getSpace(1, 0) == ' ') {
+                                else if (board.getSpace(0, 0) == 'x' && board.getSpace(2, 0) == 'x' && board.getSpace(1, 0) == ' ') {
                                     coordinates = new int[]{1, 0};
                                 } else if (board.getSpace(1, 0) == 'x' && board.getSpace(2, 0) == 'x' && board.getSpace(0, 0) == ' ') {
                                     coordinates = new int[]{0, 0};
@@ -297,7 +300,6 @@ public class TicTacToe {
                                     coordinates = new int[]{0, 2};
                                 } // If there are no two of same kind
                                 // </editor-fold>
-                                
                                 else {
                                     coordinates = myAI.generateCoordinates();
                                 }
