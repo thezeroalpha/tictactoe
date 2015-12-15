@@ -1,33 +1,40 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * AI Class for Tic-Tac-Toe in Java
+ * Copyright (c) 2015 Alexander Balgavy <a.balgavy@gmail.com>
+ * Distributed under the WTFNMF Public License
+ *
+ * The AI class for Tic-Tac-Toe, contains coordinate generation.
+ *
+ * Length: 40 lines
  */
+
 package tic.tac.toe;
 
 import java.util.Random;
 
 /**
  *
- * @author alex
+ * @author Alex Balgavy
  */
 public class AI {
+
     private char difficulty;
-    
+
     public AI() {
     }
-    
+
     public void setDifficulty(char difficulty) {
         this.difficulty = difficulty;
     }
+
     public char getDifficulty() {
         return difficulty;
     }
-    
+
     public int[] generateCoordinates() {
         Random rand = new Random();
-        int x = rand.nextInt(3)+0;
-        int y = rand.nextInt(3)+0;
-        return new int[]{x,y};
+        int x = rand.nextInt(3) + 0;
+        int y = rand.nextInt(3) + 0;
+        return new int[]{x, y};
     }
 }

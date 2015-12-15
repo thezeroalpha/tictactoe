@@ -1,8 +1,14 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Tic Tac Toe 3x3 in Java
+ * Copyright (c) 2015 Alexander Balgavy <a.balgavy@gmail.com>
+ * Distributed under the WTFNMF Public License
+ *
+ * A game of Tic-Tac-Toe on a 3-by-3 grid.
+ * Singleplayer (hard/easy AI) and multiplayer mode
+ *
+ * Length: 375 lines total
  */
+
 package tic.tac.toe;
 
 import java.util.Random;
@@ -10,18 +16,13 @@ import java.util.Scanner;
 
 /**
  *
- * @author alex
+ * @author Alex Balgavy
  */
 public class TicTacToe {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         boolean playAgain = true;
         while (playAgain) {
-        // <editor-fold defaultstate="collapsed" desc=" SETUP ">
-
             // Set up class instances
             Scanner in = new Scanner(System.in);
 
@@ -38,7 +39,7 @@ public class TicTacToe {
             // Number of players
             int numPlayers = 0;
             while (numPlayers != 1 && numPlayers != 2) {
-                
+
                 System.out.print("How many players? (1 or 2) ");
                 numPlayers = in.nextInt();
                 if (numPlayers != 1 && numPlayers != 2) {
@@ -55,15 +56,21 @@ public class TicTacToe {
                     ai = true;
                     System.out.print("Easy? ");
                     difficulty = in.next();
+                    
+                    // Easy difficulty
                     if (difficulty.contains("y")) {
                         myAI.setDifficulty('e');
                         aiset = true;
-                    } else if (difficulty.contains("n")) {
+                    }
+                    // Hard difficulty
+                    else if (difficulty.contains("n")) {
                         myAI.setDifficulty('h');
                         aiset = true;
-                    } else {
+                    } 
+                    else {
                         System.out.println("Invalid entry, choose 'y' or 'n'.");
                     }
+                    
                 } else if (numPlayers == 2) {
                     ai = false;
                     aiset = true;
@@ -71,19 +78,17 @@ public class TicTacToe {
                     System.out.println("Invalid entry.");
                 }
             }
-            
+
             if (ai == true && numPlayers == 1) {
                 Random random = new Random();
                 curP = (random.nextInt() % 2 == 0) ? 'x' : 'o';
             } else {
                 curP = 'x';
             }
-        // </editor-fold>
-
+            
             // Begin game
             Board board = new Board();
 
-            // <editor-fold defaultstate="collapsed" desc=" AI First Move ">
             // If AI goes first, if it was selected
             // If player was chosen to go first, this does not run
             if (curP == 'o' && ai && numPlayers == 1) {
@@ -119,7 +124,7 @@ public class TicTacToe {
                         moved = false;
                     }
                 }
-                
+
                 switch (curP) {
                     case 'x':
                         curP = 'o';
@@ -127,16 +132,13 @@ public class TicTacToe {
                     default:
                         curP = 'x';
                         break;
-                    
+
                 }
-                
+
             }
 
-// </editor-fold>
             // While there is a free space and nobody's won
             while (!win && !tie) {
-
-                // <editor-fold defaultstate="collapsed" desc=" User Move ">
                 // Show the board to the user
                 board.print();
                 System.out.println("Turn: " + curP);
@@ -163,8 +165,6 @@ public class TicTacToe {
                         tie = true;
                     }
 
-                    // </editor-fold>    
-                    // <editor-fold defaultstate="collapsed" desc=" 1P: AI move ">
                     // AI's move (if there is AI)
                     if (numPlayers == 1 && !win && !tie) {
 
@@ -176,14 +176,14 @@ public class TicTacToe {
                             // Easy AI: generate coordinates
                             if (myAI.getDifficulty() == 'e') {
                                 coordinates = myAI.generateCoordinates();
-                            } // Hard AI: do other stuff
+                            } 
+
+                            // Hard AI: do other stuff
                             else {
                                 // Check for center space free
-                                if (board.getSpace(1,1) == ' ') {
-                                    coordinates = new int[]{1,1};
-                                }
-                                // <editor-fold defaultstate="collapsed" desc=" Check user moves ">
-                                // Row 0
+                                if (board.getSpace(1, 1) == ' ') {
+                                    coordinates = new int[]{1, 1};
+                                } // Row 0
                                 else if (board.getSpace(0, 0) == 'x' && board.getSpace(2, 0) == 'x' && board.getSpace(1, 0) == ' ') {
                                     coordinates = new int[]{1, 0};
                                 } else if (board.getSpace(1, 0) == 'x' && board.getSpace(2, 0) == 'x' && board.getSpace(0, 0) == ' ') {
@@ -240,8 +240,6 @@ public class TicTacToe {
                                 } else if (board.getSpace(1, 1) == 'x' && board.getSpace(2, 0) == 'x' && board.getSpace(0, 2) == ' ') {
                                     coordinates = new int[]{0, 2};
                                 } // If there are no two of same kind
-                                // </editor-fold>
-                                // <editor-fold defaultstate="collapsed" desc=" Check own moves ">
                                 // Row 0
                                 else if (board.getSpace(0, 0) == 'o' && board.getSpace(2, 0) == 'o' && board.getSpace(1, 0) == ' ') {
                                     coordinates = new int[]{1, 0};
@@ -299,12 +297,10 @@ public class TicTacToe {
                                 } else if (board.getSpace(1, 1) == 'o' && board.getSpace(2, 0) == 'o' && board.getSpace(0, 2) == ' ') {
                                     coordinates = new int[]{0, 2};
                                 } // If there are no two of same kind
-                                // </editor-fold>
                                 else {
                                     coordinates = myAI.generateCoordinates();
                                 }
 
-                                
                             }
 
                             // If the move can be made
@@ -315,7 +311,7 @@ public class TicTacToe {
                                 if (board.isWinner('o')) {
                                     win = true;
                                     winP = 'o';
-                                    
+
                                 }
 
                                 // Check if tie
@@ -326,9 +322,7 @@ public class TicTacToe {
                                 moved = false;
                             }
                         }
-                    } // </editor-fold>
-                    // <editor-fold defaultstate="collapsed" desc=" 2P: Switch player ">
-                    // If no AI, switch player
+                    } // If no AI, switch player
                     else {
                         if (!win && !tie) {
                             switch (curP) {
@@ -338,27 +332,23 @@ public class TicTacToe {
                                 default:
                                     curP = 'x';
                                     break;
-                                
+
                             }
                         }
                     }
 
-                    // </editor-fold>
-                } // <editor-fold defaultstate="collapsed" desc=" Player move invalid ">
-                // Player cannot make this move
+                } // Player cannot make this move
                 // Happens if space is occupied or doesn't exist
                 else {
                     System.out.println("!!! INVALID MOVE !!!");
                     System.out.println("Go again.");
                 }
 
-// </editor-fold>
             }
 
             // Print out the board
             board.print();
 
-            // <editor-fold defaultstate="collapsed" desc=" Check win/tie ">
             // Show a message depending on what condition occurred
             if (win == true) {
                 if (ai && numPlayers == 1 && winP == 'o') {
@@ -369,12 +359,11 @@ public class TicTacToe {
             } else if (tie == true) {
                 System.out.println("You tied :/");
             }
-            // </editor-fold>
-            // <editor-fold defaultstate="collapsed" desc=" Play again? ">
-
+            
+            // If the user wants to play again
             System.out.println("Play again? ");
             String playAgainChoice = in.next();
-            
+
             if (playAgainChoice.contains("y")) {
                 playAgain = true;
             } else {
@@ -382,7 +371,6 @@ public class TicTacToe {
                 System.out.println("Bye.");
             }
 
-// </editor-fold>
         }
     }
 }

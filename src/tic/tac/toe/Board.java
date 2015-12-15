@@ -1,19 +1,24 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Board Class for Tic-Tac-Toe in Java
+ * Copyright (c) 2015 Alexander Balgavy <a.balgavy@gmail.com>
+ * Distributed under the WTFNMF Public License
+ *
+ * The class that contains the 2D Board array for Tic-Tac-Toe.
+ *
+ * Length: 115 lines
  */
+
 package tic.tac.toe;
 
 /**
  *
- * @author alex
+ * @author Alex Balgavy
  */
 public class Board {
-    
+
     // Define the board as a 3x3 grid (array)
     private char[][] board = new char[3][3];
-    
+
     // Initialize the array with empty spaces (free spots on board)
     public Board() {
         for (int x = 0; x < 3; x++) {
@@ -22,12 +27,14 @@ public class Board {
             }
         }
     }
-    
+
     // Getting piece in space
     public char getSpace(int x, int y) {
         return board[x][y];
     }
+
     // Printing (much fluff for pretty design)
+
     public void print() {
         System.out.println("- - - - - - - - -");
         System.out.println("| x:  0    1    2");
@@ -42,7 +49,7 @@ public class Board {
         System.out.println("- - - - - - - - -");
         System.out.println("");
     }
-    
+
     // Makes a move
     public boolean move(char piece, int x, int y) {
 
@@ -59,10 +66,10 @@ public class Board {
             return false; // Not executed, sum ting wong
         }
     }
-    
+
     // Tests for winning conditions
     public boolean isWinner(char piece) {
-        
+
         // Checks rows and columns
         for (int i = 0; i < 3; i++) {
             if (board[i][0] == piece && board[i][1] == piece && board[i][2] == piece) {
@@ -72,29 +79,29 @@ public class Board {
                 return true;
             }
         }
-        
+
         // Checks diagonal
         if (board[0][0] == piece && board[1][1] == piece && board[2][2] == piece) {
             return true;
         }
-        
+
         // Checks diagonal
         if (board[0][2] == piece && board[1][1] == piece && board[2][0] == piece) {
             return true;
         }
-        
+
         // Obviously, if not winning conditions, isWinner is false
         return false;
     }
-    
+
     // Checks if all spaces are occupied
     public boolean isTied() {
-        
+
         // If there's a winner, there can't be a tie!
         if (isWinner('x') || isWinner('o')) {
             return false;
         }
-        
+
         // Goes through each space individually, checking if it's empty
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
