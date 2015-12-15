@@ -179,7 +179,7 @@ public class TicTacToe {
                             } // Hard AI: do other stuff
                             else {
                                 // TODO: Check for own moves
-                                // <editor-fold defaultstate="collapsed" desc=" Hard AI logic ">
+                                // <editor-fold defaultstate="collapsed" desc=" Check user moves ">
                                 // Row 0
                                 if (board.getSpace(0, 0) == 'x' && board.getSpace(2, 0) == 'x' && board.getSpace(1, 0) == ' ') {
                                     coordinates = new int[]{1, 0};
@@ -237,11 +237,72 @@ public class TicTacToe {
                                 } else if (board.getSpace(1, 1) == 'x' && board.getSpace(2, 0) == 'x' && board.getSpace(0, 2) == ' ') {
                                     coordinates = new int[]{0, 2};
                                 } // If there are no two of same kind
+                                // </editor-fold>
+                                // <editor-fold defaultstate="collapsed" desc=" Check own moves ">
+                                // Row 0
+                                else if (board.getSpace(0, 0) == 'o' && board.getSpace(2, 0) == 'o' && board.getSpace(1, 0) == ' ') {
+                                    coordinates = new int[]{1, 0};
+                                } else if (board.getSpace(1, 0) == 'o' && board.getSpace(2, 0) == 'o' && board.getSpace(0, 0) == ' ') {
+                                    coordinates = new int[]{0, 0};
+                                } else if (board.getSpace(0, 0) == 'o' && board.getSpace(1, 0) == 'o' && board.getSpace(2, 0) == ' ') {
+                                    coordinates = new int[]{2, 0};
+                                } // Row 1
+                                else if (board.getSpace(0, 1) == 'o' && board.getSpace(2, 1) == 'o' && board.getSpace(1, 1) == ' ') {
+                                    coordinates = new int[]{1, 1};
+                                } else if (board.getSpace(1, 1) == 'o' && board.getSpace(2, 1) == 'o' && board.getSpace(0, 1) == ' ') {
+                                    coordinates = new int[]{0, 1};
+                                } else if (board.getSpace(0, 1) == 'o' && board.getSpace(1, 1) == 'o' && board.getSpace(2, 1) == ' ') {
+                                    coordinates = new int[]{2, 1};
+                                } // Row 2
+                                else if (board.getSpace(0, 2) == 'o' && board.getSpace(2, 2) == 'o' && board.getSpace(1, 2) == ' ') {
+                                    coordinates = new int[]{1, 2};
+                                } else if (board.getSpace(1, 2) == 'o' && board.getSpace(2, 2) == 'o' && board.getSpace(0, 2) == ' ') {
+                                    coordinates = new int[]{0, 2};
+                                } else if (board.getSpace(0, 2) == 'o' && board.getSpace(1, 2) == 'o' && board.getSpace(2, 2) == ' ') {
+                                    coordinates = new int[]{2, 2};
+                                } // Column 0
+                                else if (board.getSpace(0, 0) == 'o' && board.getSpace(0, 2) == 'o' && board.getSpace(0, 1) == ' ') {
+                                    coordinates = new int[]{0, 1};
+                                } else if (board.getSpace(0, 1) == 'o' && board.getSpace(0, 2) == 'o' && board.getSpace(0, 0) == ' ') {
+                                    coordinates = new int[]{0, 0};
+                                } else if (board.getSpace(0, 0) == 'o' && board.getSpace(0, 1) == 'o' && board.getSpace(0, 2) == ' ') {
+                                    coordinates = new int[]{0, 2};
+                                } // Column 1
+                                else if (board.getSpace(1, 0) == 'o' && board.getSpace(1, 2) == 'o' && board.getSpace(1, 1) == ' ') {
+                                    coordinates = new int[]{1, 1};
+                                } else if (board.getSpace(1, 1) == 'o' && board.getSpace(1, 2) == 'o' && board.getSpace(1, 0) == ' ') {
+                                    coordinates = new int[]{1, 0};
+                                } else if (board.getSpace(1, 0) == 'o' && board.getSpace(1, 1) == 'o' && board.getSpace(1, 2) == ' ') {
+                                    coordinates = new int[]{1, 2};
+                                } // Column 2
+                                else if (board.getSpace(2, 0) == 'o' && board.getSpace(2, 2) == 'o' && board.getSpace(2, 1) == ' ') {
+                                    coordinates = new int[]{2, 1};
+                                } else if (board.getSpace(2, 1) == 'o' && board.getSpace(2, 2) == 'o' && board.getSpace(2, 0) == ' ') {
+                                    coordinates = new int[]{2, 0};
+                                } else if (board.getSpace(2, 0) == 'o' && board.getSpace(2, 1) == 'o' && board.getSpace(2, 2) == ' ') {
+                                    coordinates = new int[]{2, 2};
+                                } // Diagonal 1
+                                else if (board.getSpace(0, 0) == 'o' && board.getSpace(2, 2) == 'o' && board.getSpace(1, 1) == ' ') {
+                                    coordinates = new int[]{1, 1};
+                                } else if (board.getSpace(0, 0) == 'o' && board.getSpace(1, 1) == 'o' && board.getSpace(2, 2) == ' ') {
+                                    coordinates = new int[]{2, 2};
+                                } else if (board.getSpace(1, 1) == 'o' && board.getSpace(2, 2) == 'o' && board.getSpace(0, 0) == ' ') {
+                                    coordinates = new int[]{0, 0};
+                                } // Diagonal 2
+                                else if (board.getSpace(0, 2) == 'o' && board.getSpace(2, 0) == 'o' && board.getSpace(1, 1) == ' ') {
+                                    coordinates = new int[]{1, 1};
+                                } else if (board.getSpace(0, 2) == 'o' && board.getSpace(1, 1) == 'o' && board.getSpace(2, 0) == ' ') {
+                                    coordinates = new int[]{2, 0};
+                                } else if (board.getSpace(1, 1) == 'o' && board.getSpace(2, 0) == 'o' && board.getSpace(0, 2) == ' ') {
+                                    coordinates = new int[]{0, 2};
+                                } // If there are no two of same kind
+                                // </editor-fold>
+                                
                                 else {
                                     coordinates = myAI.generateCoordinates();
                                 }
 
-                                // </editor-fold>
+                                
                             }
 
                             // If the move can be made
@@ -316,6 +377,7 @@ public class TicTacToe {
                 playAgain = true;
             } else {
                 playAgain = false;
+                System.out.println("Bye.");
             }
 
 // </editor-fold>
